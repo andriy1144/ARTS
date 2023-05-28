@@ -13,14 +13,20 @@
 <div class="container mt-5 formContainer">
   <form method="post" action="/addPost/" enctype="multipart/form-data">
     <label class="form-label">Title</label>
-    <input type="text" id="inputPassword5" class="form-control" aria-labelledby="textHelpBlock">
+    <input type="text" id="inputPassword5" class="form-control" aria-labelledby="textHelpBlock" name="title">
     <div id="textHelpBlock" class="form-text">
       Try to create a perfect title for your work
     </div>
-
+    <br>
     <div class="mb-3">
       <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="descr"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label">Tags</label>
+      <p>Enter tags separated by a space and without "#"</p>
+      <textarea class="form-control" rows="3" name="tags"></textarea>
     </div>
 
     <div class="mb-3">
