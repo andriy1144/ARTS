@@ -9,9 +9,14 @@
 <body>
   <!-- Header template -->
   <header th:insert="~{blocks/header :: header}" data-bs-theme="dark"></header>
-  <div class="container mt-5 container-form">
-    <div th:insert="~{blocks/loginPage :: loginPart}"></div>
-  </div>
+  
+  <!-- LoginForm template -->
+  <!-- <div th:unless="${user}"> -->
+    <div class="container mt-5  p-5 container-form border border-info rounded bg-info bg-opacity-10">
+      <div th:insert="~{blocks/loginPage :: loginPart}"></div>
+    </div>
+    <hr class="mt-5 border border-primary">
+  <!-- </div> -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 </body>
 </html>
