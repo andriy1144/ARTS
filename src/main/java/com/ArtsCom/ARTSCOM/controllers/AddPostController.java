@@ -1,7 +1,7 @@
 package com.ArtsCom.ARTSCOM.controllers;
 
 import com.ArtsCom.ARTSCOM.models.Post;
-import com.ArtsCom.ARTSCOM.services.AddPostService;
+import com.ArtsCom.ARTSCOM.services.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,14 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 @Controller
 @RequestMapping("/addPost")
 @AllArgsConstructor
 public class AddPostController {
-    private final AddPostService addPostService;
+    private final PostService addPostService;
 
 
     @GetMapping("/")

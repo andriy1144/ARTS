@@ -23,7 +23,7 @@ public class Post {
     @Column(name = "tags")
     private List<String> tags = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "post")
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "post")
     private List<Image> imagesList = new ArrayList<>();
 
     @Column(name = "imagePreviewId")

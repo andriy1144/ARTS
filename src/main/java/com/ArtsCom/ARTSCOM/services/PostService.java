@@ -10,14 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
 @Slf4j
 @AllArgsConstructor
-public class AddPostService {
+public class PostService {
     private final PostRepo postRepo;
     private final ImageRepo imageRepo;
 
@@ -38,7 +36,7 @@ public class AddPostService {
         post.setImagePreviewId(post.getImagesList().get(0).getId());
 
         log.info("Saving post : Title: {} , images number : {}" ,post.getTitle(),post.getImagesList().size() );
-
+        System.out.println(post.getTags());
         postRepo.save(post);
 
     }
@@ -51,5 +49,10 @@ public class AddPostService {
         image.setSize(file.getSize());
         image.setOrgName(file.getOriginalFilename());
         return image;
+    }
+
+    public List<Post> getPosts(String title){
+        if(title != null) postRepo.findPostByTitle(title);
+        return postRepo.findAll();
     }
 }
