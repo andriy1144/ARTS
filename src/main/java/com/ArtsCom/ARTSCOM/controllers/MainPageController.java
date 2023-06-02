@@ -19,7 +19,7 @@ public class MainPageController {
     @GetMapping("/")
     public String mainPage(@RequestParam(name = "SearchWord" ,required = false) String NAME, Model model){
         model.addAttribute("Posts",postService.getPosts(NAME));
-        model.addAttribute("user",true);
+        model.addAttribute("user",false);
         return "mainPage";
     }
 }
