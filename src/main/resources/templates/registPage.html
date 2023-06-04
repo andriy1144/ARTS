@@ -8,7 +8,12 @@
 </head>
 <body>
 <!-- Header template -->
-<header th:insert="~{blocks/header :: header}" data-bs-theme="dark"></header>
+<nav th:fragment="header" class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark"
+     xmlns="http://www.w3.org/1999/html">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">ARTS.com</a>
+  </div>
+</nav>
 
 <!-- LoginForm template -->
 <form  method="post" action="/registration">

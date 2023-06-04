@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
+
 @Controller
 @AllArgsConstructor
 public class MainPageController {
@@ -17,9 +19,11 @@ public class MainPageController {
 
     //Controller of the mainPage(greetingPage)
     @GetMapping("/")
-    public String mainPage(@RequestParam(name = "SearchWord" ,required = false) String NAME, Model model){
+    public String mainPage(@RequestParam(name = "SearchWord" ,required = false) String NAME, Model model, Principal principal){
         model.addAttribute("Posts",postService.getPosts(NAME));
-//        model.addAttribute("user",false);
+        System.out.println(postService.getUserByPrincipal(principal));
+        model.addAttribute("user",postService.getUserByPrincipal(principal));
+
         return "mainPage";
     }
 }

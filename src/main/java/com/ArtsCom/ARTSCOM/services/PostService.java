@@ -41,8 +41,7 @@ public class PostService {
 
         post.setImagePreviewId(post.getImagesList().get(0).getId());
 
-        log.info("Saving post : Title: {} , images number : {}" ,post.getTitle(),post.getImagesList().size() );
-        System.out.println(post.getTags());
+        log.info("Saving post : Title: {} , images number : {}, user : {}" ,post.getTitle(),post.getImagesList().size(),principal.getName() );
         postRepo.save(post);
 
     }
@@ -62,7 +61,7 @@ public class PostService {
         return postRepo.findAll();
     }
 
-    private User getUserByPrincipal(Principal principal){
+    public User getUserByPrincipal(Principal principal){
         if(principal == null) return new User();
         return userRepo.findUserByEmail(principal.getName());
     }
