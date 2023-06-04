@@ -42,6 +42,7 @@
       <label for="formFile" class="form-label">Picture 3</label>
       <input class="form-control" type="file" id="formFile" name="files">
     </div>
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
     <button type="submit" class="btn btn-outline-success">Send</button>
   </form>
 </div>

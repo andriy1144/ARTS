@@ -26,6 +26,10 @@ public class Post {
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "post")
     private List<Image> imagesList = new ArrayList<>();
 
+    @ManyToOne(cascade = CascadeType.REFRESH,fetch = FetchType.EAGER)
+    @JoinColumn
+    private User user;
+
     @Column(name = "imagePreviewId")
     private Long imagePreviewId;
 

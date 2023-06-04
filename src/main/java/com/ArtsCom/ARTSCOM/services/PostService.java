@@ -2,14 +2,17 @@ package com.ArtsCom.ARTSCOM.services;
 
 import com.ArtsCom.ARTSCOM.models.Image;
 import com.ArtsCom.ARTSCOM.models.Post;
+import com.ArtsCom.ARTSCOM.models.User;
 import com.ArtsCom.ARTSCOM.repos.ImageRepo;
 import com.ArtsCom.ARTSCOM.repos.PostRepo;
+import com.ArtsCom.ARTSCOM.repos.UserRepo;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -18,8 +21,11 @@ import java.util.List;
 public class PostService {
     private final PostRepo postRepo;
     private final ImageRepo imageRepo;
+    private final UserRepo userRepo;
 
-    public void savePost(MultipartFile[] list, Post post, String tags) throws IOException{
+    public void savePost(MultipartFile[] list, Post post, String tags, Principal principal) throws IOException{
+        post.setUser(getUserByPrincipal(principal));
+
         for (MultipartFile image : list) {
             if(image.getSize() !=0){
                 Image img = toImage(image);
@@ -54,5 +60,10 @@ public class PostService {
     public List<Post> getPosts(String title){
         if(title != null) postRepo.findPostByTitle(title);
         return postRepo.findAll();
+    }
+
+    private User getUserByPrincipal(Principal principal){
+        if(principal == null) return new User();
+        return userRepo.findUserByEmail(principal.getName());
     }
 }

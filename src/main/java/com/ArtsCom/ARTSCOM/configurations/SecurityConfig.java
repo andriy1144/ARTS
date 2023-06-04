@@ -19,11 +19,13 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     private final CustomUserDetailService userDetailService;
 
+    @Bean
     public DefaultSecurityFilterChain httpSecurity(HttpSecurity https) throws Exception {
         https.
                 authorizeHttpRequests((request) -> request
-                .requestMatchers("/","/image/**","/post/**","/registration").permitAll()
-                .anyRequest().authenticated()
+                .requestMatchers("/","/image/**","/post/**","/registration","/static/**").permitAll().
+                        anyRequest()
+                .authenticated()
                 )
                 .formLogin((login) -> login.
                         loginPage("/login")
