@@ -42,6 +42,7 @@ public class PostService {
         post.setImagePreviewId(post.getImagesList().get(0).getId());
 
         log.info("Saving post : Title: {} , images number : {}, user : {}" ,post.getTitle(),post.getImagesList().size(),principal.getName() );
+
         postRepo.save(post);
 
     }

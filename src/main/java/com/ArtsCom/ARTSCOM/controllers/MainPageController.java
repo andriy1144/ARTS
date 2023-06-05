@@ -21,8 +21,8 @@ public class MainPageController {
     @GetMapping("/")
     public String mainPage(@RequestParam(name = "SearchWord" ,required = false) String NAME, Model model, Principal principal){
         model.addAttribute("Posts",postService.getPosts(NAME));
-        System.out.println(postService.getUserByPrincipal(principal));
         model.addAttribute("user",postService.getUserByPrincipal(principal));
+
 
         return "mainPage";
     }

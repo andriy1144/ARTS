@@ -24,8 +24,8 @@ public class PostController {
     @GetMapping("/{id}")
     public String viewPost(@PathVariable(name = "id") Long ID, Model model, Principal principal){
         Post post = postRepo.findById(ID).orElse(null);
-        model.addAttribute("user",postService.getUserByPrincipal(principal));
         model.addAttribute("post", post);
+        model.addAttribute("user",postService.getUserByPrincipal(principal));
         model.addAttribute("images", post != null ? post.getImagesList() : null);
 
         return "postPage";
