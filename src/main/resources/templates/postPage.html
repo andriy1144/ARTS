@@ -17,7 +17,7 @@
   <div th:each="img : ${images}" style="display:flex;">
     <img th:src="'/image/' + ${img.id}" alt="">
   </div>
-  <a th:href="'/' + ${post.user.id} + '/profile'"><h1 th:text="${post.user.getName()}"/></a>
+  <a th:href="'/profile/' + ${post.user.id}"><h1 th:text="${post.user.getName()}"/></a>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>

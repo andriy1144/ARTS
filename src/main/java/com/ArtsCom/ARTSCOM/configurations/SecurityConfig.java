@@ -24,7 +24,7 @@ public class SecurityConfig {
     public DefaultSecurityFilterChain httpSecurity(HttpSecurity https) throws Exception {
         https.
                 authorizeHttpRequests((request) -> request
-                .requestMatchers("/","/image/**","/post/**","/registration","/static/**").permitAll().
+                .requestMatchers("/","/image/**","/post/**","/registration","/static/**","/profile/**").permitAll().
                         anyRequest()
                 .authenticated()
                 )
