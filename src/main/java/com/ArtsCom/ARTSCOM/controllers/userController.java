@@ -47,9 +47,16 @@ public class userController {
 
         if(user != null){
             model.addAttribute("userInfo",user);
-            model.addAttribute("Posts",user.getPostList());
         }
 
         return "homePage";
+    }
+
+    @GetMapping("/home")
+    public String privateControllPage(Principal principal,Model model){
+        User user = postService.getUserByPrincipal(principal);
+        model.addAttribute("userInfo",user);
+        model.addAttribute("user",user);
+        return "profileP";
     }
 }

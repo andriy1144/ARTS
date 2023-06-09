@@ -30,4 +30,10 @@ public class PostController {
 
         return "postPage";
     }
+    @GetMapping("/{id}/delete")
+    public String deletePost(@PathVariable(name = "id") Long ID,Principal principal,Model model){
+        model.addAttribute("user",postService.getUserByPrincipal(principal));
+        postService.deletePostById(ID);
+        return "redirect:/home";
+    }
 }

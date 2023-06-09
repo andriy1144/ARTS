@@ -66,4 +66,9 @@ public class PostService {
         if(principal == null) return new User();
         return userRepo.findUserByEmail(principal.getName());
     }
+
+    public void deletePostById(Long id){
+        postRepo.deleteById(id);
+        log.info("Post has been deleted with id : {}", id);
+    }
 }
