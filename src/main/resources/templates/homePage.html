@@ -10,7 +10,7 @@
 <!-- Header template -->
 <header th:insert="~{blocks/header :: header}" data-bs-theme="dark"></header>
 
-<div th:object="${userInfo}" class="info-user">
+<div th:object="${userInfo}" class="info-user container mt-5">
     Name: <h1 th:text="${userInfo.getName()}"/>
     Member of site since: <h2 th:text="${userInfo.dateOfCreate}"/>
     <div th:each="post : ${Posts}" class="card container mt-5" style="width: 18rem;display: flex;">
