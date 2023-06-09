@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -45,6 +47,18 @@ public class PostService {
 
         postRepo.save(post);
 
+    }
+
+    public void EditPost(MultipartFile[] list, Post post, String tags, Principal principal,Long id) throws IOException{
+        Post post1 = postRepo.findById(id).orElseThrow();
+
+        //Editing simple inputs
+        post1.setTitle(post.getTitle());
+        post1.setDescr(post.getDescr());
+        post1.setTags(new ArrayList<>(Collections.singleton(tags)));
+        
+        postRepo.save(post1);
+        log.info("Edited post with id : {}" , id);
     }
 
     private Image toImage(MultipartFile file) throws IOException {

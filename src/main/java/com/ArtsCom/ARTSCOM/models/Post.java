@@ -36,13 +36,10 @@ public class Post {
     @Column(name = "dateOfCreating")
     private LocalDateTime dateOfCreating;
 
-//    public void addTags(String tag){
-//        tags.add(tag);
-//    }
     public void addImages(Image img){ imagesList.add(img); }
 
     @PrePersist
-    public void init(){
+    private void init(){
         dateOfCreating = LocalDateTime.now();
     }
 }

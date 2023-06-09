@@ -10,38 +10,105 @@
 <!-- Header template -->
 <header style="background-color: lightskyblue;" th:insert="~{blocks/header :: header}" data-bs-theme="dark"></header>
 
-<div class="container mt-5 formContainer">
-  <form method="post" action="/addPost/" enctype="multipart/form-data">
+<div th:object="${post}" class="container mt-5 formContainer">
+  <form method="post" th:if="${post}" th:action="'/post/' + ${post.id} + '/edit'" enctype="multipart/form-data">
     <label class="form-label">Title</label>
-    <input type="text" id="inputPassword5" class="form-control" aria-labelledby="textHelpBlock" name="title">
+    <input type="text" th:unless="${post}" id="inputPassword5" class="form-control" aria-labelledby="textHelpBlock" name="title">
+    <input type="text" th:if="${post}"  th:value="${post.title}" class="form-control" aria-labelledby="textHelpBlock" name="title">
     <div id="textHelpBlock" class="form-text">
       Try to create a perfect title for your work
     </div>
     <br>
     <div class="mb-3">
       <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="descr"></textarea>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="descr" th:if="${post}" th:text="${post.title}"></textarea>
+      <textarea class="form-control" th:unless="${post}" rows="3" name="descr" ></textarea>
     </div>
 
     <div class="mb-3">
       <label for="exampleFormControlTextarea1" class="form-label">Tags</label>
       <p>Enter tags separated by a space and without "#"</p>
-      <textarea class="form-control" rows="3" name="tags"></textarea>
+      <textarea class="form-control" rows="3" name="tags" th:if="${post}"  th:text="${post.tags}" ></textarea>
+      <textarea class="form-control" th:unless="${post}" rows="3" name="descr" ></textarea>
+    </div>
+
+    <div th:if="${post}">
+      <div th:each="image : ${post.getImagesList()}" class="mb-3">
+        <label for="formFile" class="form-label">Picture 1</label>
+        <input class="form-control" type="file" th:value="${image.name}" id="formFile" name="files">
+        <img th:src="'/image/' + ${image.id}" alt="">
+      </div>
+    </div>
+
+
+
+    <div th:unless="${post}">
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Picture 1</label>
+        <p> The picture number1 will be the preview picture</p>
+        <input class="form-control" type="file" id="formFile" name="files">
+      </div>
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Picture 2</label>
+        <input class="form-control" type="file" id="formFile" name="files">
+      </div>
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Picture 3</label>
+        <input class="form-control" type="file" id="formFile" name="files">
+      </div>
+    </div>
+
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+    <button type="submit" class="btn btn-outline-success">Send</button>
+  </form>
+
+  <form method="post" th:unless="${post}" action="/addPost/" enctype="multipart/form-data">
+    <label class="form-label">Title</label>
+    <input type="text" th:unless="${post}" id="inputPassword5" class="form-control" aria-labelledby="textHelpBlock" name="title">
+    <input type="text" th:if="${post}"  th:value="${post.title}" class="form-control" aria-labelledby="textHelpBlock" name="title">
+    <div id="textHelpBlock" class="form-text">
+      Try to create a perfect title for your work
+    </div>
+    <br>
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="descr" th:if="${post}" th:text="${post.title}"></textarea>
+      <textarea class="form-control" th:unless="${post}" rows="3" name="descr" ></textarea>
     </div>
 
     <div class="mb-3">
-      <label for="formFile" class="form-label">Picture 1</label>
-      <p> The picture number1 will be the preview picture</p>
-      <input class="form-control" type="file" id="formFile" name="files">
+      <label for="exampleFormControlTextarea1" class="form-label">Tags</label>
+      <p>Enter tags separated by a space and without "#"</p>
+      <textarea class="form-control" rows="3" name="tags" th:if="${post}"  th:text="${post.tags}" ></textarea>
+      <textarea class="form-control" th:unless="${post}" rows="3" name="descr" ></textarea>
     </div>
-    <div class="mb-3">
-      <label for="formFile" class="form-label">Picture 2</label>
-      <input class="form-control" type="file" id="formFile" name="files">
+
+    <div th:if="${post}">
+      <div th:each="image : ${post.getImagesList()}" class="mb-3">
+        <label for="formFile" class="form-label">Picture 1</label>
+        <input class="form-control" type="file" th:value="${image.name}" id="formFile" name="files">
+        <img th:src="'/image/' + ${image.id}" alt="">
+      </div>
     </div>
-    <div class="mb-3">
-      <label for="formFile" class="form-label">Picture 3</label>
-      <input class="form-control" type="file" id="formFile" name="files">
+
+
+
+    <div th:unless="${post}">
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Picture 1</label>
+        <p> The picture number1 will be the preview picture</p>
+        <input class="form-control" type="file" id="formFile" name="files">
+      </div>
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Picture 2</label>
+        <input class="form-control" type="file" id="formFile" name="files">
+      </div>
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Picture 3</label>
+        <input class="form-control" type="file" id="formFile" name="files">
+      </div>
     </div>
+
     <input type="hidden" name="_csrf" th:value="${_csrf.token}">
     <button type="submit" class="btn btn-outline-success">Send</button>
   </form>

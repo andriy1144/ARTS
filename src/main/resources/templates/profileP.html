@@ -22,6 +22,7 @@
       <p class="card-text" th:unless="${post.descr.length() >= 25}" th:text="${post.descr}"/>
       <a th:href="'/post/' + ${post.id}" class="btn btn-primary">More...</a>
       <a th:href="'/post/' + ${post.id} + '/delete'" class="btn btn-danger">Delete</a>
+      <a th:href="'/post/' + ${post.id} + '/edit'" class="btn btn-warning">Edit</a>
     </div>
   </div>
 </div>

@@ -39,7 +39,7 @@ public class Image {
     private LocalDateTime dateOfCreating;
 
     @PrePersist
-    public void init(){
+    private void init(){
         dateOfCreating = LocalDateTime.now();
     }
 }
