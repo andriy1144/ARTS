@@ -6,6 +6,7 @@ import com.ArtsCom.ARTSCOM.models.User;
 import com.ArtsCom.ARTSCOM.repos.ImageRepo;
 import com.ArtsCom.ARTSCOM.repos.PostRepo;
 import com.ArtsCom.ARTSCOM.repos.UserRepo;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class PostService {
     private final PostRepo postRepo;
     private final ImageRepo imageRepo;
@@ -72,7 +73,7 @@ public class PostService {
     }
 
     public List<Post> getPosts(String title){
-        if(title != null) postRepo.findByTitle(title);
+        if(title != null) return postRepo.findByTitle(title);
         return postRepo.findAll();
     }
 
