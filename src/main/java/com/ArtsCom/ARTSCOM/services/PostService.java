@@ -49,7 +49,7 @@ public class PostService {
 
     }
 
-    public void EditPost(MultipartFile[] list, Post post, String tags, Principal principal,Long id) throws IOException{
+    public void EditPost(Post post, String tags, Principal principal,Long id) throws IOException{
         Post post1 = postRepo.findById(id).orElseThrow();
 
         //Editing simple inputs

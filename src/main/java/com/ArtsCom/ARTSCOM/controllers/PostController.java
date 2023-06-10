@@ -44,16 +44,15 @@ public class PostController {
 
         model.addAttribute("post",post);
 
-        return "addPostPage";
+        return "editPage";
     }
 
     @PostMapping("/{id}/edit")
     public String editPostPost(@RequestParam(name = "tags") String TAGS,
-                               Post post ,
-                               @RequestParam(name = "files") MultipartFile[] multipartFiles,
+                               Post post,
                                Principal pr,
                                @PathVariable(name = "id") Long id) throws IOException {
-        postService.EditPost(multipartFiles,post,TAGS,pr,id);
+        postService.EditPost(post,TAGS,pr,id);
         return "redirect:/home";
     }
 }
