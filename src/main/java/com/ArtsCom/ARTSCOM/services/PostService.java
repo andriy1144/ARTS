@@ -56,7 +56,7 @@ public class PostService {
         post1.setTitle(post.getTitle());
         post1.setDescr(post.getDescr());
         post1.setTags(new ArrayList<>(Collections.singleton(tags)));
-        
+
         postRepo.save(post1);
         log.info("Edited post with id : {}" , id);
     }
