@@ -9,11 +9,6 @@
 <body>
   <!-- Header template -->
   <header th:insert="~{blocks/header :: header}" data-bs-theme="dark"></header>
-
-  <form action="/">
-      Searching: <input type="text" name="title"><br>
-      <button type="submit">Searc</button>
-  </form>
   <!-- Posts -->
   <div class="grid text-center">
       <div th:each="post : ${Posts}" class="card container mt-5" style="width: 18rem;display: flex;">

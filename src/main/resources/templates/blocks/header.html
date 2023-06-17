@@ -17,10 +17,14 @@
             <li th:if="${user.email}"  class="nav-item">
               <form method="post" action="/logout">
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-                <input type="submit" class="nav-link active " value="Log out">
+                <input type="submit" class="nav-link active btn btn-danger" value="Sign Out">
               </form>
             </li>
         </ul>
+      <form class="d-flex" action="/" role="search">
+        <input class="form-control me-2" type="text" name="title" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
 <!--        <li class="nav-item dropdown">-->
 <!--&lt;!&ndash;          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">&ndash;&gt;-->
 <!--&lt;!&ndash;            Dropdown&ndash;&gt;-->
