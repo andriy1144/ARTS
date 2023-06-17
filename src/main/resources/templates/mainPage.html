@@ -12,7 +12,10 @@
   <!-- Posts -->
   <div class="grid text-center">
       <div th:each="post : ${Posts}" class="card container mt-5" style="width: 18rem;display: flex;">
-          <a th:href="'/post/' + ${post.id}"><img th:src=" '/image/' + ${post.imagePreviewId}" class="card-img-top" alt="Image_Post"></a>
+          <a th:href="'/post/' + ${post.id}">
+              <img th:unless="${post.getImagesList().size() == 0}" th:src=" '/image/' + ${post.imagePreviewId}" class="card-img-top" alt="Image_Post">
+              <img th:if="${post.getImagesList().size() ==  0}" src="/static/images/no-image-found.png" class="card-img-top" alt="Image_Post">
+          </a>
           <div class="card-body">
               <h5 class="card-title" th:text="${post.title}"/>
               <p class="card-text" th:if="${post.descr.length() >= 25}" th:text="${post.descr.substring(0,25)} + '...' "/>
