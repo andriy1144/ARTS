@@ -20,7 +20,6 @@ public class MainPageController {
     //Controller of the mainPage(greetingPage)
     @GetMapping("/")
     public String mainPage(@RequestParam(name = "title" ,required = false) String title, Model model, Principal principal){
-        System.out.println(title);
         model.addAttribute("Posts",postService.getPosts(title));
         model.addAttribute("user",postService.getUserByPrincipal(principal));
 
