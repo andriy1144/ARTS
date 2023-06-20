@@ -13,6 +13,8 @@
 <div th:object="${userInfo}" class="info-user container mt-5">
     Name: <h1 th:text="${userInfo.getName()}"/>
     Member of site since: <h2 th:text="${userInfo.dateOfCreate}"/>
+    Avatar: <img th:if="${userInfo.getIconImage() != null}" th:src=" '/avatarImage/'  + ${userInfo.getIconImage().getId()}" class="rounded-circle shadow-4-strong" width="50px" height="50px" alt="avatarImg">
+    <img th:unless="${userInfo.getIconImage() != null}" class="rounded-circle shadow-4-strong" src="/static/images/no-image-found.png" width="50px" height="50px" alt="avatarImg">
     <div th:each="post : ${userInfo.getPostList()}" class="card container mt-5" style="width: 18rem;display: flex;">
         <a th:href="'/post/' + ${post.id}">
             <img th:if="${post.getImagesList().size() ==  0}" src="/static/images/no-image-found.png" class="card-img-top" alt="Image_Post">

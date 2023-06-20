@@ -1,6 +1,8 @@
 package com.ArtsCom.ARTSCOM.controllers;
 
+import com.ArtsCom.ARTSCOM.models.AvatarImages;
 import com.ArtsCom.ARTSCOM.models.Image;
+import com.ArtsCom.ARTSCOM.repos.AvatartImageRepo;
 import com.ArtsCom.ARTSCOM.repos.ImageRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
@@ -18,6 +20,7 @@ import java.io.ByteArrayInputStream;
 public class ImageController {
 
     private final ImageRepo imageRepo;
+    private final AvatartImageRepo avatartImageRepo;
 
     @GetMapping("/image/{id}")
     public ResponseEntity<?> imageView(@PathVariable(name = "id") Long id){
@@ -28,5 +31,19 @@ public class ImageController {
                 .contentLength(image.getSize())
                 .contentType(MediaType.valueOf(image.getContentType()))
                 .body(new InputStreamResource(new ByteArrayInputStream(image.getBytes())));
+    }
+
+    @GetMapping("/avatarImage/{id}")
+    public ResponseEntity<?> AvatarView(@PathVariable(name = "id") Long id){
+        AvatarImages image = avatartImageRepo.findById(id).orElse(null);
+
+        if(image != null){
+            return ResponseEntity.ok()
+                    .header("imageName",image.getName())
+                    .contentLength(image.getSize())
+                    .contentType(MediaType.valueOf(image.getContentType()))
+                    .body(new InputStreamResource(new ByteArrayInputStream(image.getBytes())));
+        }
+        return null;
     }
 }

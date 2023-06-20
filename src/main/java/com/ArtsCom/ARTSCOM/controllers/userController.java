@@ -10,7 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 
 @Controller
@@ -58,5 +61,14 @@ public class userController {
         model.addAttribute("userInfo",user);
         model.addAttribute("user",user);
         return "profileP";
+    }
+
+    @PostMapping("/setImageAvatar")
+    public String setImageAv(@RequestParam(name = "avatar") MultipartFile file, Principal principal) throws IOException {
+        User user = postService.getUserByPrincipal(principal);
+
+        userService.addIconImage(user,file);
+
+        return "redirect:/home";
     }
 }

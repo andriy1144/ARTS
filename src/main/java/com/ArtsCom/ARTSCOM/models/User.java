@@ -2,7 +2,8 @@ package com.ArtsCom.ARTSCOM.models;
 
 import com.ArtsCom.ARTSCOM.models.enums.Role;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,7 +11,8 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,6 +32,10 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roleSet = new HashSet<>();
+
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private AvatarImages IconImage;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Post> postList = new ArrayList<>();
