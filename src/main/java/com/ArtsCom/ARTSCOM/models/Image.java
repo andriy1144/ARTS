@@ -33,13 +33,4 @@ public class Image {
 
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.REFRESH)
     private Post post;
-
-
-    @Column(name = "dateOfCreating")
-    private LocalDateTime dateOfCreating;
-
-    @PrePersist
-    private void init(){
-        dateOfCreating = LocalDateTime.now();
-    }
 }

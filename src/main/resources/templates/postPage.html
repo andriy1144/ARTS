@@ -15,10 +15,15 @@
   <h1 th:text="${post.title}"/>
   <p th:text="${post.descr}"/>
   <div th:each="img : ${images}" style="display:flex;">
-    <img th:src="'/image/' + ${img.id}" alt="">
+    <img width="300px" height="300px" th:src="'/image/' + ${img.id}" alt="">
   </div>
-  <a th:href="'/profile/' + ${post.user.id}"><h1 th:text="${post.user.getName()}"/></a>
-  <img th:if="${post.getUser().getIconImage() != null}" width="50px" height="50px" class="rounded-circle shadow-4-strong" th:src=" '/avatarImage/'  + ${post.getUser().getIconImage().getId()}" alt="avatar">
+  <p th:text="'Posted : ' + ${post.dateOfCreating}">
+  <div style="display:flex;">
+  <div>  <img style="margin-right:10px" th:if="${post.getUser().getIconImage() != null}" width="50px" height="50px" class="rounded-circle shadow-4-strong" th:src=" '/avatarImage/'  + ${post.getUser().getIconImage().getId()}" alt="avatar">
+  </div>
+  <div>  <a style="font-size:24px" th:href="'/profile/' + ${post.user.id}"><p th:text="${post.user.getName()}"/></a>
+  </div>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>

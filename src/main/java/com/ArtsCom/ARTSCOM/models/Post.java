@@ -3,9 +3,12 @@ package com.ArtsCom.ARTSCOM.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Entity
 @Data
@@ -34,12 +37,14 @@ public class Post {
     private Long imagePreviewId;
 
     @Column(name = "dateOfCreating")
-    private LocalDateTime dateOfCreating;
+    private String dateOfCreating;
 
     public void addImages(Image img){ imagesList.add(img); }
 
     @PrePersist
     private void init(){
-        dateOfCreating = LocalDateTime.now();
+        Date d= new Date();
+        DateFormat dr = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
+        dateOfCreating = dr.format(d);
     }
 }

@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -40,11 +41,13 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Post> postList = new ArrayList<>();
 
-    private LocalDateTime dateOfCreate;
+    private String dateOfCreate;
 
     @PrePersist
     private void init(){
-        dateOfCreate = LocalDateTime.now();
+        Date d= new Date();
+        DateFormat dr = DateFormat.getDateInstance(DateFormat.FULL,Locale.US);
+        dateOfCreate = dr.format(d);
     }
 
     @Override

@@ -11,18 +11,25 @@
 <header th:insert="~{blocks/header :: header}" data-bs-theme="dark"></header>
 
 <div th:object="${userInfo}" class="info-user container mt-5">
-  Name: <h1 th:text="${userInfo.getName()}"/>
-  Member of site since: <h2 th:text="${userInfo.dateOfCreate}"/>
+  <div style="display:flex;">
+      <img style="margin-right:10px" th:if="${userInfo.getIconImage() != null}" th:src=" '/avatarImage/'  + ${userInfo.getIconImage().getId()}" class="rounded-circle shadow-4-strong" width="50px" height="50px" alt="avatarImg">
+      <img style="margin-right:10px" th:unless="${userInfo.getIconImage() != null}" class="rounded-circle shadow-4-strong" src="/static/images/no-image-found.png" width="50px" height="50px" alt="avatarImg">
+    <div>
+      <h1 th:text="${userInfo.getName()}"/>
+    </div>
+  </div>
+    <br>
+    Member of site since: <h2 th:text="${userInfo.dateOfCreate}"/>
+    <br>
   <div>
-    Avatar: <img th:if="${userInfo.getIconImage() != null}" th:src=" '/avatarImage/'  + ${userInfo.getIconImage().getId()}" class="rounded-circle shadow-4-strong" width="50px" height="50px" alt="avatarImg">
-    <img th:unless="${userInfo.getIconImage() != null}" class="rounded-circle shadow-4-strong" src="/static/images/no-image-found.png" width="50px" height="50px" alt="avatarImg">
     <form method="post" action="/setImageAvatar" enctype="multipart/form-data">
       <input type="file" name="avatar" value="Open Image">
       <input type="hidden" name="_csrf" th:value="${_csrf.token}">
       <button type="submit"> Set Avatar </button>
     </form>
   </div>
-  <h1>MyPosts</h1>
+  <br>
+  <h1>Posts</h1>
   <div th:each="post : ${userInfo.getPostList()}" class="card container mt-5" style="width: 18rem;display: flex;">
     <a th:href="'/post/' + ${post.id}">
       <img th:if="${post.getImagesList().size() ==  0}" src="/static/images/no-image-found.png" class="card-img-top" alt="Image_Post">
