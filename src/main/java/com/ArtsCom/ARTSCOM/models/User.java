@@ -4,11 +4,15 @@ import com.ArtsCom.ARTSCOM.models.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.boot.autoconfigure.web.format.DateTimeFormatters;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.text.DateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.FormatStyle;
 import java.util.*;
 
 @Entity
@@ -45,9 +49,8 @@ public class User implements UserDetails {
 
     @PrePersist
     private void init(){
-        Date d= new Date();
-        DateFormat dr = DateFormat.getDateInstance(DateFormat.FULL,Locale.US);
-        dateOfCreate = dr.format(d);
+        LocalDateTime l = LocalDateTime.now();
+        dateOfCreate = l.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
     }
 
     @Override

@@ -5,6 +5,8 @@ import lombok.Data;
 
 import java.text.DateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,8 +45,7 @@ public class Post {
 
     @PrePersist
     private void init(){
-        Date d= new Date();
-        DateFormat dr = DateFormat.getDateInstance(DateFormat.FULL, Locale.US);
-        dateOfCreating = dr.format(d);
+        LocalDateTime l = LocalDateTime.now();
+        dateOfCreating = l.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
     }
 }

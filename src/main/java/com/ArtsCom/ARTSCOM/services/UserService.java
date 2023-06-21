@@ -46,9 +46,19 @@ public class UserService {
     }
 
     public void addIconImage(User user, MultipartFile file) throws IOException{
-        AvatarImages image = toImage(file);
-        user.setIconImage(image);
-        userRepo.save(user);
+        AvatarImages iconImage = user.getIconImage();
+        if(iconImage !=null){
+            iconImage = avatartImageRepo.findById(iconImage.getId()).get();
+            iconImage.setBytes(file.getBytes());
+            iconImage.setSize(file.getSize());
+            iconImage.setName(file.getName());
+            iconImage.setContentType(file.getContentType());
+            avatartImageRepo.save(iconImage);
+        }else {
+            iconImage = toImage(file);
+            user.setIconImage(iconImage);
+            userRepo.save(user);
+        }
         log.info("Avatar is set");
     }
 }
