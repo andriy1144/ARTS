@@ -21,17 +21,22 @@ import java.security.Principal;
 public class AddPostController {
     private final PostService addPostService;
 
-
-    @GetMapping("/")
-    public String addPostPage(Model model,Principal principal){
-        model.addAttribute("user",addPostService.getUserByPrincipal(principal));
+        @GetMapping("/")
+        public String addPostPage (Model model, Principal principal){
+        model.addAttribute("user", addPostService.getUserByPrincipal(principal));
         return "addPostPage";
 
     }
 
-    @PostMapping("/")
-    public String addPostPagePOST(@RequestParam(name = "tags") String TAGS, Post post , @RequestParam(name = "files") MultipartFile[] multipartFiles, Principal pr) throws IOException {
-        addPostService.savePost(multipartFiles,post,TAGS,pr);
+        @PostMapping("/")
+        public String addPostPagePOST (@RequestParam(name = "tags") String TAGS, Post
+        post, @RequestParam(name = "files") MultipartFile[]multipartFiles, Principal pr){
+            try {
+                addPostService.savePost(multipartFiles, post, TAGS, pr);
+            }catch (Exception e){
+                System.out.println(e);
+                return "errorPage";
+            }
         return "redirect:/";
     }
 }

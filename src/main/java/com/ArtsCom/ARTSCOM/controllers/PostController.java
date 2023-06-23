@@ -51,8 +51,13 @@ public class PostController {
     public String editPostPost(@RequestParam(name = "tags") String TAGS,
                                Post post,
                                Principal pr,
-                               @PathVariable(name = "id") Long id) throws IOException {
-        postService.EditPost(post,TAGS,pr,id);
+                               @PathVariable(name = "id") Long id){
+        try{
+            postService.EditPost(post,TAGS,pr,id);
+        }catch (Exception e){
+            System.out.println(e);
+            return "errorPage";
+        }
         return "redirect:/home";
     }
 }
