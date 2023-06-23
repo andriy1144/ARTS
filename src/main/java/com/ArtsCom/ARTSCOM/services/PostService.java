@@ -16,13 +16,14 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Slf4j
 @AllArgsConstructor
 public class PostService {
     private final PostRepo postRepo;
-    private final ImageRepo imageRepo;
     private final UserRepo userRepo;
 
     public void savePost(MultipartFile[] list, Post post, String tags, Principal principal) throws IOException{
@@ -74,8 +75,14 @@ public class PostService {
     }
 
     public List<Post> getPosts(String title){
-        if(title != null) return postRepo.findByTitle(title);
+        // If title is not null - return search
+        if(title != null) return searchPost(title.toLowerCase());
         return postRepo.findAll();
+    }
+    private List<Post> searchPost(String title){
+        List<Post> posts = postRepo.findAll();
+        Stream<Post> stream = posts.stream().filter((n) -> n.getTitle().toLowerCase().startsWith(title));
+        return stream.collect(Collectors.toList());
     }
 
     public User getUserByPrincipal(Principal principal){

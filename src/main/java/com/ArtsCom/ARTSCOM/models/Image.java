@@ -1,13 +1,13 @@
 package com.ArtsCom.ARTSCOM.models;
 
 import jakarta.persistence.*;
-import jdk.jfr.ContentType;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Getter
+@Setter
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
