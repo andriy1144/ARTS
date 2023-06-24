@@ -1,7 +1,10 @@
 package com.ArtsCom.ARTSCOM.controllers;
 
+import com.ArtsCom.ARTSCOM.models.TokenModel;
 import com.ArtsCom.ARTSCOM.models.User;
+import com.ArtsCom.ARTSCOM.repos.TokenRepo;
 import com.ArtsCom.ARTSCOM.repos.UserRepo;
+import com.ArtsCom.ARTSCOM.services.EmailSenderService;
 import com.ArtsCom.ARTSCOM.services.PostService;
 import com.ArtsCom.ARTSCOM.services.UserService;
 import lombok.AllArgsConstructor;
@@ -23,6 +26,8 @@ public class userController {
     private final UserService userService;
     private final UserRepo userRepo;
     private final PostService postService;
+    private final EmailSenderService senderService;
+    private final TokenRepo tokenRepo;
 
     @GetMapping("/login")
     public String createUser(){
@@ -40,8 +45,31 @@ public class userController {
             model.addAttribute("errorMassage", "User with email:" + user.getEmail() + " already exists");
             return "registPage";
         }
+        model.addAttribute("email",user.getEmail());
+
+        String str = "Hi %s this is ARTS.com administration\n" +
+                "please confirm your registration by clickin this link http://localhost:8080/confirm-account?token=%s";
+
+        TokenModel tokenModel = tokenRepo.findByUserId(user.getId());
+
+        senderService.sendEmail(user.getEmail(),
+               String.format(str,user.getName(),tokenModel.getConfirmationToken()),"Complete Registration");
+        return "confirmBlock";
+    }
+
+    @GetMapping("/confirm-account")
+    public String getConfirmed(@RequestParam(name = "token") String token){
+        TokenModel tokenModel = tokenRepo.findByConfirmationToken(token);
+        System.out.println(tokenModel.getConfirmationToken());
+        if(tokenModel != null){
+            User user = tokenModel.getUser();
+            user.setActive(true);
+            userRepo.save(user);
+        }
+
         return "redirect:/login";
     }
+
 
     @GetMapping("/profile/{id}")
     public String homePage(Model model, Principal principal, @PathVariable(name = "id") Long id){

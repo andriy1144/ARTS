@@ -2,9 +2,11 @@ package com.ArtsCom.ARTSCOM.services;
 
 import com.ArtsCom.ARTSCOM.models.AvatarImages;
 import com.ArtsCom.ARTSCOM.models.Image;
+import com.ArtsCom.ARTSCOM.models.TokenModel;
 import com.ArtsCom.ARTSCOM.models.User;
 import com.ArtsCom.ARTSCOM.models.enums.Role;
 import com.ArtsCom.ARTSCOM.repos.AvatartImageRepo;
+import com.ArtsCom.ARTSCOM.repos.TokenRepo;
 import com.ArtsCom.ARTSCOM.repos.UserRepo;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,16 +24,19 @@ public class UserService {
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
     private final AvatartImageRepo avatartImageRepo;
+    private final TokenRepo tokenRepo;
 
     public boolean createUser(User user){
         String email = user.getEmail();
         if(userRepo.findUserByEmail(email) !=null) return false;
-        user.setActive(true);
+        user.setActive(false);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.getRoleSet().add(Role.ROLE_USER);
         user.setIconImage(null);
         userRepo.save(user);
-        log.info("Creating new user: {}, date of creating: {}" ,user.getEmail(),user.getDateOfCreate());
+        TokenModel tk = new TokenModel(user);
+        tokenRepo.save(tk);
+        log.info("Creating new user: {}, date of creating: {} with token {}" ,user.getEmail(),user.getDateOfCreate(),tk.getConfirmationToken());
         return true;
     }
 
