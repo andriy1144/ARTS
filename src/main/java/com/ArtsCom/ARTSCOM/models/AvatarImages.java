@@ -25,6 +25,6 @@ public class AvatarImages {
     @Column(columnDefinition = "LONGBLOB")
     private byte[] bytes;
 
-    @OneToOne(fetch = FetchType.LAZY,mappedBy = "IconImage")
-    private User user;
+//    @OneToOne(fetch = FetchType.LAZY,mappedBy = "IconImage")
+//    private User user;
 }

@@ -60,11 +60,13 @@ public class userController {
     @GetMapping("/confirm-account")
     public String getConfirmed(@RequestParam(name = "token") String token){
         TokenModel tokenModel = tokenRepo.findByConfirmationToken(token);
-        System.out.println(tokenModel.getConfirmationToken());
         if(tokenModel != null){
             User user = tokenModel.getUser();
             user.setActive(true);
             userRepo.save(user);
+            tokenRepo.deleteById(tokenModel.getId());
+        }else{
+            return "errorPage";
         }
 
         return "redirect:/login";

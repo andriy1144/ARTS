@@ -39,7 +39,7 @@ public class User implements UserDetails {
     private Set<Role> roleSet = new HashSet<>();
 
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = AvatarImages.class,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private AvatarImages IconImage;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
