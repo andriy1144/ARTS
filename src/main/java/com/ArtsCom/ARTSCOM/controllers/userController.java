@@ -8,6 +8,8 @@ import com.ArtsCom.ARTSCOM.services.EmailSenderService;
 import com.ArtsCom.ARTSCOM.services.PostService;
 import com.ArtsCom.ARTSCOM.services.UserService;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +30,9 @@ public class userController {
     private final PostService postService;
     private final EmailSenderService senderService;
     private final TokenRepo tokenRepo;
+
+    //just to try user another logger
+    private final Logger logger = LoggerFactory.getLogger(userController.class);
 
     @GetMapping("/login")
     public String createUser(){
@@ -100,5 +105,23 @@ public class userController {
         userService.addIconImage(user,file);
 
         return "redirect:/home";
+    }
+
+    @GetMapping("/editProfilePage")
+    public String editPage(Model model,Principal principal){
+        User user = postService.getUserByPrincipal(principal);
+            model.addAttribute("userInfo",user);
+            model.addAttribute("user",user);
+
+            return "editProfilePage";
+    }
+
+    @PostMapping("/editProfile")
+    public String editPagePost(Principal principal,Model model, @RequestParam(name = "name") String name){
+        User user = postService.getUserByPrincipal(principal);
+        user.setName(name);
+        userRepo.save(user);
+        logger.info("Set new name");
+        return "redirect:/editProfilePage";
     }
 }
