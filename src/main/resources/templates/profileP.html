@@ -11,6 +11,10 @@
 <header th:insert="~{blocks/header :: header}" data-bs-theme="dark"></header>
 
 <div th:object="${userInfo}" class="info-user container mt-5">
+  <div  th:unless="${userInfo.isEnabled()}" class="alert alert-danger">
+    Your account is not activated. Click on this link to get message activation <a href="/confirm"> Link </a>
+  </div>
+
   <div style="display:flex;">
       <img style="margin-right:10px" th:if="${userInfo.getIconImage() != null}" th:src=" '/avatarImage/'  + ${userInfo.getIconImage().getId()}" class="rounded-circle shadow-4-strong" width="50px" height="50px" alt="avatarImg">
       <img style="margin-right:10px" th:unless="${userInfo.getIconImage() != null}" class="rounded-circle shadow-4-strong" src="/static/images/no-image-found.png" width="50px" height="50px" alt="avatarImg">

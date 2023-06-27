@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Controller
 @AllArgsConstructor
@@ -50,6 +52,13 @@ public class userController {
             model.addAttribute("errorMassage", "User with email:" + user.getEmail() + " already exists");
             return "registPage";
         }
+
+        return "redirect:/login";
+    }
+    @GetMapping("/confirm")
+    public String confirmPage(Model model,Principal principal){
+        User user = postService.getUserByPrincipal(principal);
+
         model.addAttribute("email",user.getEmail());
 
         String str = "Hi %s this is ARTS.com administration\n" +
@@ -59,9 +68,11 @@ public class userController {
 
         senderService.sendEmail(user.getEmail(),
                String.format(str,user.getName(),tokenModel.getConfirmationToken()),"Complete Registration");
+
+        logger.info("Send activation link to user {} in {}",user.getEmail(), new Date());
+
         return "confirmBlock";
     }
-
     @GetMapping("/confirm-account")
     public String getConfirmed(@RequestParam(name = "token") String token){
         TokenModel tokenModel = tokenRepo.findByConfirmationToken(token);
@@ -73,8 +84,7 @@ public class userController {
         }else{
             return "errorPage";
         }
-
-        return "redirect:/login";
+        return "redirect:/home";
     }
 
 
@@ -82,7 +92,6 @@ public class userController {
     public String homePage(Model model, Principal principal, @PathVariable(name = "id") Long id){
         model.addAttribute("user",postService.getUserByPrincipal(principal));
         User user = userRepo.findById(id).orElse(null);
-
         if(user != null){
             model.addAttribute("userInfo",user);
         }
@@ -93,6 +102,8 @@ public class userController {
     @GetMapping("/home")
     public String privateControllPage(Principal principal,Model model){
         User user = postService.getUserByPrincipal(principal);
+
+
         model.addAttribute("userInfo",user);
         model.addAttribute("user",user);
         return "profileP";
